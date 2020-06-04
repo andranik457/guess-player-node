@@ -51,6 +51,17 @@ const search = {
         //         search.responseSender(query.page, result.hits.hits.length, result.hits.total.value, arr, next);
         //     });
         });
+    },
+
+    setupBody: body => {
+        !body.pagesize || body.pagesize <= 0 || ((typeof body.pagesize !== "string") && (typeof body.pagesize !== "number")) ? body.pagesize = 20 : false;
+        body.pagesize > 100 ? body.pagesize = 100 : false;
+        !body.page || body.page <= 0 || typeof body.page !== "string" ? body.page = 1 : false;
+        return body;
+    },
+
+    responseSender: (page, pageSize, totalItems, items, next) => {
+        next(null, itemsResponse(page, pageSize, totalItems, items));
     }
 
 };
