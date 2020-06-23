@@ -3,7 +3,7 @@ const router = require("express").Router();
 const { expressWrapper } = require("../modules/helpers");
 const { NotFoundException } = require("../modules/error");
 const searchFunction = require("../modules/search");
-const { getQuestion, checkAnswer } = require("../modules/questions");
+const { getQuestion, checkAnswer, getHintTypeEasyImage } = require("../modules/questions");
 
 const response = (res, next) => (err, result) => {
     if (err) return next(err);
@@ -19,6 +19,8 @@ router.get("/search/suggest", (req, res, next) => {
 
 router.post("/question/:level", expressWrapper(getQuestion));
 router.post("/check/:answer", expressWrapper(checkAnswer));
+
+router.get("/hint/easy-image/:questionId/:shape/:possibleHintsCount", expressWrapper(getHintTypeEasyImage));
 
 
 /* 404 */
